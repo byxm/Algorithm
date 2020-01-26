@@ -58,9 +58,10 @@ class SelectionSort {
   }
 }
 
-const n = 20000;
-const arr = SortHelper.generateRandomArray(n, 0, 1000000);
+const n = 100000;
+// const arr = SortHelper.generateRandomArray(n, 0, 1000000);
+const arr = SortHelper.generateNealyOrderArray(n, 5);
 console.time('Selection-sort');
 SelectionSort.sort(arr);
 console.timeEnd('Selection-sort');
-SortHelper.printArr(arr);
+// SortHelper.printArr(arr);

@@ -53,8 +53,9 @@ var SelectionSort = (function () {
     };
     return SelectionSort;
 })();
-var n = 20000;
-var arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 1000000);
+var n = 100000;
+// const arr = SortHelper.generateRandomArray(n, 0, 1000000);
+var arr = sortTestHelper_1["default"].generateNealyOrderArray(n, 5);
 console.time('Selection-sort');
 SelectionSort.sort(arr);
 console.timeEnd('Selection-sort');
