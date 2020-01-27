@@ -9,7 +9,7 @@
  * v8源码在这里 https://github.com/v8/v8/blob/ad82a40509c5b5b4680d4299c8f08d6c6d31af3c/src/js/array.js
  * 这里先不纠结了，下来有空在研究，先把这个课程的算法学完
  */
-var sortTestHelper_1 = require('./sortTestHelper');
+var SortHelper = require('./sortTestHelper');
 var SelectionSort = (function () {
     function SelectionSort() {
     }
@@ -54,9 +54,9 @@ var SelectionSort = (function () {
     return SelectionSort;
 })();
 var n = 100000;
-// const arr = SortHelper.generateRandomArray(n, 0, 1000000);
-var arr = sortTestHelper_1["default"].generateNealyOrderArray(n, 5);
+const arr = SortHelper.default.generateRandomArray(n, 0, 100000);
+// var arr = sortTestHelper_1["default"].generateNealyOrderArray(n, 5);
 console.time('Selection-sort');
 SelectionSort.sort(arr);
 console.timeEnd('Selection-sort');
-// SortHelper.printArr(arr);
+// SortHelper.default.printArr(arr);
