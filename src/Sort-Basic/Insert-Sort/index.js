@@ -38,8 +38,8 @@ var InsertSort = (function () {
     return InsertSort;
 })();
 var n = 100000;
-// const arr = SortHelper.generateRandomArray(n, 0, 100000);
-var arr = sortTestHelper_1["default"].generateNealyOrderArray(n, 5);
+const arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 100000);
+// var arr = sortTestHelper_1["default"].generateNealyOrderArray(n, 5);
 console.time('Insert-sort');
 InsertSort.sort(arr);
 console.timeEnd('Insert-sort');
