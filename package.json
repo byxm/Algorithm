@@ -19,5 +19,8 @@
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
     "source-map-loader": "^0.2.4"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
   }
 }
