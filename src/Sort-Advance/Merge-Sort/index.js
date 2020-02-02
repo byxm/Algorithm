@@ -43,6 +43,12 @@ var MergeSort = (function () {
      */
     MergeSort.sort = function (arr, l, r) {
         // 终止条件，左边界不能超过右边界
+        /**
+         * 这个地方有个优化我就没写了，如果数组元素比较小，比如10以内的话就直接可以使用插入排序了
+         * 因为元素越少说明有序的可能就越大，那么使用插入排序效率就更高
+         * pseudo code:
+         * if(r - l < 15) { InsertSort(arr); return; }
+        */
         if (l >= r) {
             return;
         }
@@ -50,14 +56,32 @@ var MergeSort = (function () {
         var mid = Math.floor((l + r) / 2);
         this.sort(arr, l, mid);
         this.sort(arr, mid + 1, r);
-        this.merge(arr, l, mid, r);
+        if (arr[mid] < arr[mid + 1]) {
+            this.merge(arr, l, mid, r);
+        }
+    };
+    /**
+     * @description: 自底向上的归并排序，这种方式就是先将元素进行分组排序，先两个一组，再4个一组，再8个一组....依次下去
+     * 这种就需要再去递归分隔元素了，直接向上归并然后合并数组
+     */
+    MergeSort.sortBU = function (arr) {
+        var n = arr.length;
+        for (var sz = 1; sz <= n; sz *= 2) {
+            for (var i = 0; i + sz < n; i += (sz * 2)) {
+                console.log('sizedfdfdf', i + (sz * 2) - 1, n - 1);
+                this.merge(arr, i, i + sz - 1, i + (sz * 2) - 1); // 右边界不能越界
+            }
+        }
     };
     return MergeSort;
 })();
-var n = 10;
-var arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 10);
-// const arr = SortHelper.generateNealyOrderArray(n, 5);
-console.time('Merge-sort');
-MergeSort.sort(arr, 0, arr.length - 1);
-console.timeEnd('Merge-sort');
-sortTestHelper_1["default"].printArr(arr); 
+var n = 3;
+var arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 3);
+// const arr = SortHelper.generateNealyOrderArray(n, 10);
+// console.time('Merge-sort');
+// MergeSort.sort(arr, 0, arr.length - 1);
+// console.timeEnd('Merge-sort');
+console.time('Merge-advanceSort');
+MergeSort.sortBU(arr);
+console.timeEnd('Merge-advanceSort');
+sortTestHelper_1["default"].printArr(arr);

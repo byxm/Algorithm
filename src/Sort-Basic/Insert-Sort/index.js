@@ -22,7 +22,8 @@ var InsertSort = (function () {
             //     */
             //         this.swap(arr, j, j - 1);
             // }
-            // 写法二：
+            // 写法二：这是一个优化的写法，为了避免交换时候的三次赋值。为了达到一次赋值的目的，只需要再每次满足条件的时候记录下索引
+            // 然后在最后一次交换的时候在该索引处赋值即可
             var e = arr[i];
             var j = i;
             for (; j > 0 && e < arr[j - 1]; j--) {
@@ -37,9 +38,10 @@ var InsertSort = (function () {
     };
     return InsertSort;
 })();
+exports["default"] = InsertSort;
 var n = 100000;
-const arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 100000);
-// var arr = sortTestHelper_1["default"].generateNealyOrderArray(n, 5);
+// const arr = SortHelper.generateRandomArray(n, 0, 100000);
+var arr = sortTestHelper_1["default"].generateNealyOrderArray(n, 5);
 console.time('Insert-sort');
 InsertSort.sort(arr);
 console.timeEnd('Insert-sort');

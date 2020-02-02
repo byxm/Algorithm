@@ -6,7 +6,7 @@
 import SortHelper from '../Selection-Sort/sortTestHelper';
 
 
-class InsertSort<T> {
+export default class InsertSort<T> {
 
     /**
      * @description: 插入排序法，思路就像是整理手中的扑克牌一样，每次拿到一个新的数据就往前进行比较如果不符合条件就交换位置
