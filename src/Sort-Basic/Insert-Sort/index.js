@@ -1,10 +1,12 @@
+"use strict";
+exports.__esModule = true;
 /*
  * @Description: 插入排序法
  * @Author:
  * @Date: 2020-01-26 11:12:13
  */
-var sortTestHelper_1 = require('../Selection-Sort/sortTestHelper');
-var InsertSort = (function () {
+var sortTestHelper_1 = require("../Selection-Sort/sortTestHelper");
+var InsertSort = /** @class */ (function () {
     function InsertSort() {
     }
     /**
@@ -33,11 +35,11 @@ var InsertSort = (function () {
         }
     };
     InsertSort.swap = function (args, minIndex, index) {
-        _a = [args[index], args[minIndex]], args[minIndex] = _a[0], args[index] = _a[1];
         var _a;
+        _a = [args[index], args[minIndex]], args[minIndex] = _a[0], args[index] = _a[1];
     };
     return InsertSort;
-})();
+}());
 exports["default"] = InsertSort;
 var n = 100000;
 // const arr = SortHelper.generateRandomArray(n, 0, 100000);
@@ -45,4 +47,4 @@ var arr = sortTestHelper_1["default"].generateNealyOrderArray(n, 5);
 console.time('Insert-sort');
 InsertSort.sort(arr);
 console.timeEnd('Insert-sort');
-// SortHelper.printArr(arr); 
+// SortHelper.printArr(arr);

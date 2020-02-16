@@ -68,15 +68,14 @@ var MergeSort = (function () {
         var n = arr.length;
         for (var sz = 1; sz <= n; sz *= 2) {
             for (var i = 0; i + sz < n; i += (sz * 2)) {
-                console.log('sizedfdfdf', i + (sz * 2) - 1, n - 1);
-                this.merge(arr, i, i + sz - 1, i + (sz * 2) - 1); // 右边界不能越界
+                this.merge(arr, i, i + sz - 1, Math.min(i + (sz * 2) - 1, n - 1)); // 右边界不能越界
             }
         }
     };
     return MergeSort;
 })();
-var n = 3;
-var arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 3);
+var n = 1000000;
+var arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 1000000);
 // const arr = SortHelper.generateNealyOrderArray(n, 10);
 // console.time('Merge-sort');
 // MergeSort.sort(arr, 0, arr.length - 1);
@@ -84,4 +83,4 @@ var arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 3);
 console.time('Merge-advanceSort');
 MergeSort.sortBU(arr);
 console.timeEnd('Merge-advanceSort');
-sortTestHelper_1["default"].printArr(arr);
+// SortHelper.printArr(arr); 

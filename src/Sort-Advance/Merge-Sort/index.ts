@@ -80,8 +80,8 @@ class MergeSort {
 }
 
 
-const n = 3;
-const arr = SortHelper.generateRandomArray(n, 0, 3);
+const n = 1000000;
+const arr = SortHelper.generateRandomArray(n, 0, 1000000);
 // const arr = SortHelper.generateNealyOrderArray(n, 10);
 // console.time('Merge-sort');
 // MergeSort.sort(arr, 0, arr.length - 1);
@@ -91,4 +91,4 @@ console.time('Merge-advanceSort');
 MergeSort.sortBU(arr);
 console.timeEnd('Merge-advanceSort');
 
-SortHelper.printArr(arr);
+// SortHelper.printArr(arr);
