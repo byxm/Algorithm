@@ -1,13 +1,16 @@
+"use strict";
 /*
  * @Description: 冒泡排序
  * @Author:
  * @Date: 2020-01-26 22:58:43
  */
+exports.__esModule = true;
 var sortTestHelper_1 = require("../Selection-Sort/sortTestHelper");
-var BubbleSort = (function () {
+var BubbleSort = /** @class */ (function () {
     function BubbleSort() {
     }
     BubbleSort.sort = function (arr) {
+        var _a;
         var isSorted = true;
         for (var i = 0; i < arr.length - 1; i++) {
             for (var j = 0; j < arr.length - i - 1; j++) {
@@ -20,14 +23,15 @@ var BubbleSort = (function () {
             if (isSorted)
                 break; // 如果没有发生任何一次元素交换说明这组数据就是有序的
         }
-        var _a;
+        return arr;
     };
     return BubbleSort;
-})();
+}());
 var n = 100000;
 // const arr = SortHelper.generateRandomArray(n, 0, 100000);
-var arr = sortTestHelper_1["default"].generateNealyOrderArray(n);
-console.time("Bubble-sort");
-BubbleSort.sort(arr);
-console.timeEnd("Bubble-sort");
+// var arr = sortTestHelper_1["default"].generateNealyOrderArray(n);
+// console.time("Bubble-sort");
+// BubbleSort.sort(arr);
+// console.timeEnd("Bubble-sort");
 // SortHelper.printArr(arr);
+exports["default"] = BubbleSort;

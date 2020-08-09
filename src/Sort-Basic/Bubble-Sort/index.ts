@@ -19,6 +19,7 @@ class BubbleSort {
       }
       if(isSorted) break; // 如果没有发生任何一次元素交换说明这组数据就是有序的
     }
+    return arr;
   }
 }
 
@@ -29,3 +30,5 @@ console.time("Bubble-sort");
 BubbleSort.sort(arr);
 console.timeEnd("Bubble-sort");
 // SortHelper.printArr(arr);
+
+export default BubbleSort;

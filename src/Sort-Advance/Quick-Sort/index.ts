@@ -69,7 +69,7 @@ class QuickSort<T> {
 
 
 const n = 1000000;
-const arr = SortHelper.generateRandomArray(n, 0, 1000000);
+const arr = SortHelper.generateRandomArray(n, 0, 0);
 // const arr = SortHelper.generateNealyOrderArray(n, 10);
 // console.time('Merge-sort');
 // MergeSort.sort(arr, 0, arr.length - 1);

@@ -15,6 +15,21 @@ var QuickSort = /** @class */ (function () {
     function QuickSort() {
     }
     QuickSort.partition = function (arr, l, r) {
+        /**
+         * 优化二：
+         * 对于近乎有序的数组会存在一个问题，每次选择的用于比较的最左边元素都会比左边所有元素大比右边所有元素小，
+         * 这样的话在二分递归树的时候就会导致快速排序的递归树退化成一个链表，时间复杂度降为O(n2)
+         * 1 2 3 4 5 6 7 8 9
+         *    \
+         *    2 3 4 5 6 7 8 9
+         *     \
+         *     3 4 5 6 7 8 9
+         *       \
+         *     4 5 6 7 8 9
+         * 解决这个问题的方案是不用数组的第一个元素作为比较值，而是随机获取一个和第一个交换位置再用它来做比较
+         * 这样的话每次比较还会出现上述情况的概率就会大大降低近乎为零，第一次选中最小元素是1 / n - 1, 第二次 1 / n - 2....
+         * 经过数学论证可以得到时间复杂度为nlogn,详细推导可以深入去了解一下
+         */
         var randomIndex = Math.floor((r - l + 1) * Math.random() + l);
         this.swap(arr, l, randomIndex);
         var v = arr[l];
@@ -51,7 +66,7 @@ var QuickSort = /** @class */ (function () {
     return QuickSort;
 }());
 var n = 1000000;
-var arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 1000000);
+var arr = sortTestHelper_1["default"].generateRandomArray(n, 0, 0);
 // const arr = SortHelper.generateNealyOrderArray(n, 10);
 // console.time('Merge-sort');
 // MergeSort.sort(arr, 0, arr.length - 1);
