@@ -53,6 +53,7 @@ class MaxHeap<T extends number> {
    * 当这个元素比左右子节点都大或者下沉到没有左右子节点，这个过程结束
    */
   shiftDown(initIndex: number): void {
+    // 注释部分是我最开始不正确的思路，我从索引里面取了值来比较。这样就加大了变量维护的复杂度
     // const leftChildIndex = this.getLeftChildIndex(initIndex);
     // const rightChildIndex = this.getRightChildIndex(initIndex);
     // const maxBetweenLeftChildAndRightChild = Math.max(
@@ -61,7 +62,7 @@ class MaxHeap<T extends number> {
     // );  这里用两个索引，并且比较左右节点的大小就绕进去了，这样写下去会变得复杂,应该遵照规律，使用一个索引来代替
 
     // shiftDown终止条件1：当shiftDown左节点索引大于堆的长度说明越界
-    while (this.getLeftChildIndex(initIndex) <= this.heapData.length) {
+    while (this.getLeftChildIndex(initIndex) <= this.heapData.length - 1) {
       let dynamicLeftOrRightChild = this.getLeftChildIndex(initIndex);
       if (
         this.heapData[dynamicLeftOrRightChild + 1] >
