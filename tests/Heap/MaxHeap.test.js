@@ -58,4 +58,10 @@ describe("堆", () => {
     }
     assert.deepEqual(sortArr, [56, 45, 23, 12, 10, 2, 1, 0]);
   });
+  it("原地堆排序", () => {
+    const maxHeap = new MaxHeap.default();
+    const arr = [45, 2, 12, 56, 0, 23, 1, 10];
+    maxHeap.heapifySort(arr);
+    assert.deepEqual(maxHeap.heapData, [0, 1, 2, 10, 12, 23, 45, 56]);
+  });
 });

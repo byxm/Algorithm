@@ -12,6 +12,51 @@ class MaxHeap<T extends number> {
   }
 
   /**
+   * 原地堆排序,只需要在原有堆的基础上进行排序即可，无需再开辟新的数组空间
+   * 对于升序排序：最大堆的第一个元素是最大值，每次将第一个元素和最后一个元素交换位置，然后在从第一个元素的位置进行shiftDown的操作
+   */
+  heapifySort(arr: Array<T>) {
+    for (let i = 0; i < arr.length; i++) {
+      this.heapData.push(arr[i]);
+    }
+    for (let i = Math.floor((this.heapData.length - 1) / 2); i >= 0; i--) {
+      this.shiftDown(i);
+    }
+    for (let i = this.heapData.length - 1; i > 0; i--) {
+      [this.heapData[0], this.heapData[i]] = [
+        this.heapData[i],
+        this.heapData[0],
+      ];
+      this.__shiftDown(0, i - 1);
+    }
+  }
+
+  /**
+   * 按照指定堆元素长度进行shiftDown操作
+   */
+  __shiftDown(startIndex, endIndex) {
+    while (this.getLeftChildIndex(startIndex) <= endIndex) {
+      let dynamicLeftOrRightChild = this.getLeftChildIndex(startIndex);
+      if (
+        dynamicLeftOrRightChild + 1 < endIndex &&
+        this.heapData[dynamicLeftOrRightChild] <
+          this.heapData[dynamicLeftOrRightChild + 1]
+      ) {
+        dynamicLeftOrRightChild = dynamicLeftOrRightChild + 1;
+      }
+
+      if (this.heapData[startIndex] > this.heapData[dynamicLeftOrRightChild])
+        break;
+
+      [this.heapData[startIndex], this.heapData[dynamicLeftOrRightChild]] = [
+        this.heapData[dynamicLeftOrRightChild],
+        this.heapData[startIndex],
+      ];
+      startIndex = dynamicLeftOrRightChild;
+    }
+  }
+
+  /**
    * heapify的过程是将一个数组转换成堆，思路是找到完全二叉树中最后一个不是叶子节点的根节点，从这个
    * 节点开始对每个根节点做shiftDown操作
    * tip: 这个会有两种情况，完全二叉树索引是从0开始还是从1开始，如果是从1开始最后一个根节点的索引是this.heapData.length / 2
@@ -34,6 +79,7 @@ class MaxHeap<T extends number> {
 
   /**
    * 使用添加的元素和他的父节点的元素判断如果比他大就和父节点元素交换位置,注意JS的除法是带小数的
+   * 以0开头的最大堆的父节点索引的位置是 (index - 1) / 2
    */
   shiftUp(newElementIndex: number): void {
     while (
@@ -44,7 +90,7 @@ class MaxHeap<T extends number> {
       const parentIndex = Math.floor((newElementIndex - 1) / 2);
       [this.heapData[parentIndex], this.heapData[newElementIndex]] = [
         this.heapData[newElementIndex],
-        this.heapData[parentIndex]
+        this.heapData[parentIndex],
       ];
       newElementIndex = Math.floor((newElementIndex - 1) / 2);
     }
@@ -92,7 +138,7 @@ class MaxHeap<T extends number> {
 
       [this.heapData[initIndex], this.heapData[dynamicLeftOrRightChild]] = [
         this.heapData[dynamicLeftOrRightChild],
-        this.heapData[initIndex]
+        this.heapData[initIndex],
       ];
       initIndex = dynamicLeftOrRightChild;
     }
@@ -115,7 +161,11 @@ class MaxHeap<T extends number> {
   }
 }
 
-// const maxHeap: MaxHeap<number> = new MaxHeap();
+const maxHeap: MaxHeap<number> = new MaxHeap();
+const arr = [45, 2, 12, 56, 0, 23, 1, 10];
+maxHeap.heapifySort(arr);
+console.log("heapifySOr", maxHeap.heapData);
+
 // const arr = SortHelper.generateRandomArray(50, 0, 100);
 
 // for (let i = 0; i < arr.length; i++) {
