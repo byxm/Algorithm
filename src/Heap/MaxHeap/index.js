@@ -1,14 +1,26 @@
-"use strict";
-exports.__esModule = true;
 /**
  * @description 构造最大堆，还是使用数组实现满二叉树。满二叉树起始索引从1开始，
  * 左子树节点索引为根节点索引的2倍，右子树节点为根节点索引的2倍加1
  * 如果根节点索引从0开始，则左子节点为2*i + 1, 又子节点为2*i + 2
  */
-var MaxHeap = /** @class */ (function () {
+var MaxHeap = (function () {
     function MaxHeap() {
         this.heapData = new Array();
     }
+    /**
+     * heapify的过程是将一个数组转换成堆，思路是找到完全二叉树中最后一个不是叶子节点的根节点，从这个
+     * 节点开始对每个根节点做shiftDown操作
+     * tip: 这个会有两种情况，完全二叉树索引是从0开始还是从1开始，如果是从1开始最后一个根节点的索引是this.heapData.length / 2
+     * 如果从0开始this.heapData的长度就需要减1
+     */
+    MaxHeap.prototype.heapify = function (arr) {
+        for (var i = 0; i < arr.length; i++) {
+            this.heapData.push(arr[i]);
+        }
+        for (var i = Math.floor((this.heapData.length - 1) / 2); i >= 0; i--) {
+            this.shiftDown(i);
+        }
+    };
     MaxHeap.prototype.insert = function (el) {
         this.heapData.push(el);
         this.shiftUp(this.heapData.length - 1);
@@ -17,17 +29,17 @@ var MaxHeap = /** @class */ (function () {
      * 使用添加的元素和他的父节点的元素判断如果比他大就和父节点元素交换位置,注意JS的除法是带小数的
      */
     MaxHeap.prototype.shiftUp = function (newElementIndex) {
-        var _a;
         while (this.heapData.length > 1 &&
             this.heapData[newElementIndex] >
                 this.heapData[Math.floor((newElementIndex - 1) / 2)]) {
             var parentIndex = Math.floor((newElementIndex - 1) / 2);
             _a = [
                 this.heapData[newElementIndex],
-                this.heapData[parentIndex],
+                this.heapData[parentIndex]
             ], this.heapData[parentIndex] = _a[0], this.heapData[newElementIndex] = _a[1];
             newElementIndex = Math.floor((newElementIndex - 1) / 2);
         }
+        var _a;
     };
     /**
      * 取出堆中最大的元素，将根节点的元素取出，然后将最后一个元素放置到根节点位置，再依次调整根节点元素的位置
@@ -52,7 +64,6 @@ var MaxHeap = /** @class */ (function () {
         //   this.heapData[leftChildIndex],
         //   this.heapData[rightChildIndex]
         // );  这里用两个索引，并且比较左右节点的大小就绕进去了，这样写下去会变得复杂,应该遵照规律，使用一个索引来代替
-        var _a;
         // shiftDown终止条件1：当shiftDown左节点索引大于堆的长度说明越界
         while (this.getLeftChildIndex(initIndex) <= this.heapData.length - 1) {
             var dynamicLeftOrRightChild = this.getLeftChildIndex(initIndex);
@@ -64,10 +75,11 @@ var MaxHeap = /** @class */ (function () {
                 break;
             _a = [
                 this.heapData[dynamicLeftOrRightChild],
-                this.heapData[initIndex],
+                this.heapData[initIndex]
             ], this.heapData[initIndex] = _a[0], this.heapData[dynamicLeftOrRightChild] = _a[1];
             initIndex = dynamicLeftOrRightChild;
         }
+        var _a;
     };
     MaxHeap.prototype.getLeftChildIndex = function (parentIndex) {
         return 2 * parentIndex + 1;
@@ -82,11 +94,5 @@ var MaxHeap = /** @class */ (function () {
         return this.heapData.length === 0;
     };
     return MaxHeap;
-}());
-// const maxHeap: MaxHeap<number> = new MaxHeap();
-// const arr = SortHelper.generateRandomArray(50, 0, 100);
-// for (let i = 0; i < arr.length; i++) {
-//   maxHeap.insert(arr[i]);
-// }
-// console.log(maxHeap.heapData);
+})();
 exports["default"] = MaxHeap;

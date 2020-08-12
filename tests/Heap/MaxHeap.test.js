@@ -36,4 +36,26 @@ describe("堆", () => {
     }
     assert.deepEqual(sortArr, [56, 45, 23, 12, 10, 2, 1, 0]);
   });
+  it("heapify构造最大堆，测试数组1", () => {
+    const maxHeap = new MaxHeap.default();
+    const arr = [45, 2, 12, 56, 0, 23, 1, 10];
+    maxHeap.heapify(arr);
+    assert.deepEqual(maxHeap.heapData, [56, 45, 23, 10, 0, 12, 1, 2]);
+  });
+  it("heapify构造最大堆，测试数组2", () => {
+    const maxHeap = new MaxHeap.default();
+    const arr = [2, 55, 23, 90, 0, 12, 55];
+    maxHeap.heapify(arr);
+    assert.deepEqual(maxHeap.heapData, [90, 55, 55, 2, 0, 12, 23]);
+  });
+  it("heapify最大堆排序", () => {
+    const maxHeap = new MaxHeap.default();
+    const arr = [45, 2, 12, 56, 0, 23, 1, 10];
+    maxHeap.heapify(arr);
+    const sortArr = [];
+    for (let i = 0; i < arr.length; i++) {
+      sortArr.push(maxHeap.extractMax());
+    }
+    assert.deepEqual(sortArr, [56, 45, 23, 12, 10, 2, 1, 0]);
+  });
 });

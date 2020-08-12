@@ -11,6 +11,22 @@ class MaxHeap<T extends number> {
     this.heapData = new Array<T>();
   }
 
+  /**
+   * heapify的过程是将一个数组转换成堆，思路是找到完全二叉树中最后一个不是叶子节点的根节点，从这个
+   * 节点开始对每个根节点做shiftDown操作
+   * tip: 这个会有两种情况，完全二叉树索引是从0开始还是从1开始，如果是从1开始最后一个根节点的索引是this.heapData.length / 2
+   * 如果从0开始this.heapData的长度就需要减1
+   */
+  heapify(arr: Array<T>) {
+    for (let i = 0; i < arr.length; i++) {
+      this.heapData.push(arr[i]);
+    }
+
+    for (let i = Math.floor((this.heapData.length - 1) / 2); i >= 0; i--) {
+      this.shiftDown(i);
+    }
+  }
+
   insert(el: T) {
     this.heapData.push(el);
     this.shiftUp(this.heapData.length - 1);
@@ -28,7 +44,7 @@ class MaxHeap<T extends number> {
       const parentIndex = Math.floor((newElementIndex - 1) / 2);
       [this.heapData[parentIndex], this.heapData[newElementIndex]] = [
         this.heapData[newElementIndex],
-        this.heapData[parentIndex],
+        this.heapData[parentIndex]
       ];
       newElementIndex = Math.floor((newElementIndex - 1) / 2);
     }
@@ -76,7 +92,7 @@ class MaxHeap<T extends number> {
 
       [this.heapData[initIndex], this.heapData[dynamicLeftOrRightChild]] = [
         this.heapData[dynamicLeftOrRightChild],
-        this.heapData[initIndex],
+        this.heapData[initIndex]
       ];
       initIndex = dynamicLeftOrRightChild;
     }

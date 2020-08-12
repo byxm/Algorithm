@@ -1,11 +1,9 @@
-"use strict";
 /*
  * @Description: 生成测试随机数
  * @Author:
  * @Date: 2020-01-22 17:54:45
  */
-exports.__esModule = true;
-var SortTestHelper = /** @class */ (function () {
+var SortTestHelper = (function () {
     function SortTestHelper() {
     }
     SortTestHelper.generateRandomArray = function (n, rangeL, rangeR) {
@@ -19,7 +17,6 @@ var SortTestHelper = /** @class */ (function () {
      * @description: 生成近乎有序的数组
      */
     SortTestHelper.generateNealyOrderArray = function (n, swapTime) {
-        var _a;
         if (swapTime === void 0) { swapTime = 0; }
         var arr = [];
         // 先生成一组有序数组
@@ -33,6 +30,7 @@ var SortTestHelper = /** @class */ (function () {
             _a = [arr[b], arr[a]], arr[a] = _a[0], arr[b] = _a[1];
         }
         return arr;
+        var _a;
     };
     SortTestHelper.printArr = function (arr) {
         for (var i = 0; i < arr.length; i++) {
@@ -41,5 +39,5 @@ var SortTestHelper = /** @class */ (function () {
         }
     };
     return SortTestHelper;
-}());
+})();
 exports["default"] = SortTestHelper;
