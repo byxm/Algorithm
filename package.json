@@ -4,7 +4,8 @@
   "description": "algorithm by javascript",
   "main": "index.js",
   "scripts": {
-    "test":"mocha ./tests/**/*.test.js"
+    "test":"mocha ./tests/**/**.test.js",
+    "test:BinarySearch": "mocha ./tests/BinarySearchTree/**.test.js"
   },
   "repository": {
     "type": "git",
