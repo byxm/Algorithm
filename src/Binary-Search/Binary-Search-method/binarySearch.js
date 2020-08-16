@@ -27,11 +27,15 @@ var BinarySearch = /** @class */ (function () {
                 r = mid - 1;
             }
         }
+        return -1;
     };
     BinarySearch.prototype.searchRecursive = function (arr, target, l, r) {
         var mid = Math.floor(l + (r - l) / 2);
         if (arr[mid] === target) {
             return mid;
+        }
+        if (l === r) {
+            return -1;
         }
         if (target > arr[mid]) {
             l = mid + 1;

@@ -26,12 +26,16 @@ class BinarySearch<T> {
         r = mid - 1;
       }
     }
+    return -1;
   }
 
   searchRecursive(arr: Array<T>, target: T, l: number, r: number) {
     let mid = Math.floor(l + (r - l) / 2);
     if (arr[mid] === target) {
       return mid;
+    }
+    if (l === r) {
+      return -1;
     }
     if (target > arr[mid]) {
       l = mid + 1;
