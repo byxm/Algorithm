@@ -71,4 +71,27 @@ describe("二分搜索树", () => {
       right: { key: 89, value: 89, left: null, right: null },
     });
   });
+  it("二分搜索树深度优先遍历", () => {
+    const bst = new BST.default();
+    const arr = [34, 23, 89, 10, 5];
+    for (const bstEle of arr) {
+      bst.insert(bstEle, bstEle);
+    }
+    bst.preOrder();
+    assert.deepEqual(bst.loopElement, [34, 23, 10, 5, 89]);
+    bst.inOrder();
+    assert.deepEqual(bst.loopElement, [5, 10, 23, 34, 89]);
+    bst.postOrder();
+    assert.deepEqual(bst.loopElement, [5, 10, 23, 89, 34]);
+  });
+
+  it("二分搜索树广度优先遍历", () => {
+    const bst = new BST.default();
+    const arr = [16, 32, 28, 11, 19, 40, 24];
+    for (const bstEle of arr) {
+      bst.insert(bstEle, bstEle);
+    }
+    bst.levelOrder();
+    assert.deepEqual(bst.loopElement, [16, 11, 32, 28, 40, 19, 24]);
+  });
 });

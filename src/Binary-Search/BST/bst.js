@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+var queue_1 = require("./queue");
 /**
  * 二分搜索树节点类
  */
@@ -18,6 +19,7 @@ var BST = /** @class */ (function () {
     function BST() {
         this.root = null;
         this.nodeCount = 0;
+        this.loopElement = [];
     }
     BST.prototype.insert = function (key, value) {
         this.root = this.insertElement(this.root, key, value);
@@ -115,6 +117,68 @@ var BST = /** @class */ (function () {
         }
         else {
             return this.searchKey(node.right, key);
+        }
+    };
+    /**
+     * 深度优先遍历：从左子树到右子树依次遍历二分搜索树每个节点的前中后三个位置
+     * 前序遍历：当遍历到前位置的节点，对接点进行操作
+     * 中序遍历：当遍历到中位置的节点，对接点进行操作
+     * 后续遍历：当遍历到后位置的节点，对接点进行操作
+     */
+    BST.prototype.preOrder = function () {
+        this.loopElement = [];
+        this.preOrderRecursion(this.root);
+    };
+    BST.prototype.preOrderRecursion = function (node) {
+        if (node != null) {
+            this.loopElement.push(node.key);
+            this.preOrderRecursion(node.left);
+            this.preOrderRecursion(node.right);
+        }
+    };
+    BST.prototype.inOrder = function () {
+        this.loopElement = [];
+        this.inOrderRecursion(this.root);
+    };
+    BST.prototype.inOrderRecursion = function (node) {
+        if (node != null) {
+            this.inOrderRecursion(node.left);
+            this.loopElement.push(node.key);
+            this.inOrderRecursion(node.right);
+        }
+    };
+    BST.prototype.postOrder = function () {
+        this.loopElement = [];
+        this.postOrderRecursion(this.root);
+    };
+    BST.prototype.postOrderRecursion = function (node) {
+        if (node != null) {
+            this.postOrderRecursion(node.left);
+            this.postOrderRecursion(node.right);
+            this.loopElement.push(node.key);
+        }
+    };
+    /**
+     * 广度优先遍历（层序遍历）：对二叉树进行逐层遍历，实现方式借助队列
+     * 根元素先入队，根元素出队时左右子树入队，当接下来的根元素出队时相应的左右子树入队
+     *
+     */
+    BST.prototype.levelOrder = function () {
+        this.loopElement = [];
+        this.levelOrderOperate(this.root);
+    };
+    BST.prototype.levelOrderOperate = function (node) {
+        var queue = new queue_1["default"]();
+        queue.enqueue(node);
+        while (!queue.isEmpty()) {
+            var front = queue.dequeue();
+            this.loopElement.push(front.key);
+            if (front && front.left != null) {
+                queue.enqueue(front.left);
+            }
+            if (front && front.right != null) {
+                queue.enqueue(front.right);
+            }
         }
     };
     BST.prototype.isEmpty = function () {

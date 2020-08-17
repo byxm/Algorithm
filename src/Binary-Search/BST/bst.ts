@@ -1,3 +1,5 @@
+import Queue from "./queue";
+
 /**
  * 二分搜索树节点类
  */
@@ -19,10 +21,12 @@ class TreeNode<T> {
 class BST<T> {
   nodeCount: number;
   root: TreeNode<T>; // 当前二分搜索树的根节点
+  loopElement: Array<any>;
 
   constructor() {
     this.root = null;
     this.nodeCount = 0;
+    this.loopElement = [];
   }
 
   insert(key, value) {
@@ -82,7 +86,7 @@ class BST<T> {
       parentNode.value = value;
     } else if (parentNode.key > key) {
       parentNode.left = new TreeNode<T>(key, value);
-    } else if(parentNode.key < key) {
+    } else if (parentNode.key < key) {
       parentNode.right = new TreeNode<T>(key, value);
     }
     return node;
@@ -125,6 +129,75 @@ class BST<T> {
       return this.searchKey(node.left, key);
     } else {
       return this.searchKey(node.right, key);
+    }
+  }
+
+  /**
+   * 深度优先遍历：从左子树到右子树依次遍历二分搜索树每个节点的前中后三个位置
+   * 前序遍历：当遍历到前位置的节点，对接点进行操作
+   * 中序遍历：当遍历到中位置的节点，对接点进行操作
+   * 后续遍历：当遍历到后位置的节点，对接点进行操作
+   */
+  preOrder() {
+    this.loopElement = [];
+    this.preOrderRecursion(this.root);
+  }
+  preOrderRecursion(node: TreeNode<T>) {
+    if (node != null) {
+      this.loopElement.push(node.key);
+      this.preOrderRecursion(node.left);
+      this.preOrderRecursion(node.right);
+    }
+  }
+
+  inOrder() {
+    this.loopElement = [];
+    this.inOrderRecursion(this.root);
+  }
+
+  inOrderRecursion(node: TreeNode<T>) {
+    if (node != null) {
+      this.inOrderRecursion(node.left);
+      this.loopElement.push(node.key);
+      this.inOrderRecursion(node.right);
+    }
+  }
+
+  postOrder() {
+    this.loopElement = [];
+    this.postOrderRecursion(this.root);
+  }
+
+  postOrderRecursion(node: TreeNode<T>) {
+    if (node != null) {
+      this.postOrderRecursion(node.left);
+      this.postOrderRecursion(node.right);
+      this.loopElement.push(node.key);
+    }
+  }
+
+  /**
+   * 广度优先遍历（层序遍历）：对二叉树进行逐层遍历，实现方式借助队列
+   * 根元素先入队，根元素出队时左右子树入队，当接下来的根元素出队时相应的左右子树入队
+   *
+   */
+  levelOrder() {
+    this.loopElement = [];
+    this.levelOrderOperate(this.root);
+  }
+
+  levelOrderOperate(node: TreeNode<T>) {
+    const queue = new Queue();
+    queue.enqueue(node);
+    while (!queue.isEmpty()) {
+      const front: any = queue.dequeue();
+      this.loopElement.push(front.key);
+      if (front && front.left != null) {
+        queue.enqueue(front.left);
+      }
+      if (front && front.right != null) {
+        queue.enqueue(front.right);
+      }
     }
   }
 
