@@ -181,6 +181,61 @@ var BST = /** @class */ (function () {
             }
         }
     };
+    /**
+     * 获取二分搜索树的最小值：递归遍历到最左边没有左子树的节点即是最小值
+     */
+    BST.prototype.getMinimum = function () {
+        var min = this.getMinimumOperate(this.root);
+        return min.key;
+    };
+    BST.prototype.getMinimumOperate = function (node) {
+        if (node.left == null) {
+            return node;
+        }
+        return this.getMinimumOperate(node.left);
+    };
+    BST.prototype.getMaxmun = function () {
+        var max = this.getMaxmumOperate(this.root);
+        return max.key;
+    };
+    BST.prototype.getMaxmumOperate = function (node) {
+        if (node.right == null) {
+            return node;
+        }
+        return this.getMaxmumOperate(node.right);
+    };
+    BST.prototype.deleteMinmum = function () {
+        var root = this.deleteMinmumOperate(this.root);
+        return root;
+    };
+    /**
+     * 删除最小节点：找到最左边左子树为空的最小节点进行删除，删除的逻辑就是将它的父亲节点的左子树指向null即可
+     * 这个地方用递归的思路就不要去想怎么获取父亲节点，而是直接将它的右子树返回。因为返回右子树再递归拼接上就组成了删除后的子树
+     */
+    BST.prototype.deleteMinmumOperate = function (node) {
+        if (node.left == null) {
+            var rightNode = node.right;
+            node = rightNode;
+            this.nodeCount--;
+            return node;
+        }
+        node.left = this.deleteMinmumOperate(node.left);
+        return node;
+    };
+    BST.prototype.deleteMaxmum = function () {
+        var root = this.deleteMaxmumOperate(this.root);
+        return root;
+    };
+    BST.prototype.deleteMaxmumOperate = function (node) {
+        if (node.right == null) {
+            var leftNode = node.left;
+            node = leftNode;
+            this.nodeCount--;
+            return node;
+        }
+        node.right = this.deleteMaxmumOperate(node.right);
+        return node;
+    };
     BST.prototype.isEmpty = function () {
         return this.nodeCount === 0;
     };

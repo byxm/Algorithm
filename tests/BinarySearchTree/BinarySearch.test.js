@@ -94,4 +94,37 @@ describe("二分搜索树", () => {
     bst.levelOrder();
     assert.deepEqual(bst.loopElement, [16, 11, 32, 28, 40, 19, 24]);
   });
+
+  it("二分搜索树获取最大值", () => {
+    const bst = new BST.default();
+    const arr = [16, 32, 28, 11, 19, 40, 24];
+    for (const bstEle of arr) {
+      bst.insert(bstEle, bstEle);
+    }
+    assert.equal(bst.getMinimum(), 11);
+    assert.equal(bst.getMaxmun(), 40);
+  });
+
+  it("删除二分搜素树中的最小节点", () => {
+    const bst = new BST.default();
+    const arr = [28, 18, 32, 16, 26, 35, 29, 10,11];
+    for (const bstEle of arr) {
+      bst.insert(bstEle, bstEle);
+    }
+    bst.deleteMinmum();
+    // bst.deleteMinmum();
+    console.log("logggggg", JSON.stringify(bst.root));
+    // assert.equal(deepEqual)
+  });
+  it("删除二分搜素树中的最大节点", () => {
+    const bst = new BST.default();
+    const arr = [28, 18, 32, 16, 26, 35, 29, 10,11];
+    for (const bstEle of arr) {
+      bst.insert(bstEle, bstEle);
+    }
+    bst.deleteMaxmum();
+    // bst.deleteMinmum();
+    console.log("logggggg", bst.root);
+    // assert.equal(deepEqual)
+  });
 });
