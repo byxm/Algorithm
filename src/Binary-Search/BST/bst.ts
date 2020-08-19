@@ -264,6 +264,49 @@ class BST<T> {
     return node;
   }
 
+  /**
+   * 删除二分搜索树中任意的一个节点：
+   * 1. 找到该节点所在位置，如果是左右子树有为空的，那么删除逻辑和删除最大最小值一样
+   * 2. 如果左右子树均不为空，就需要找到当前节点的前驱结点或者后继节点来替代这个节点
+   * 前驱结点：当前节点左子树中的最大值
+   * 后继节点：当前节点右子树中的最小值
+   * 因为根据二分搜素树的性质，这样的两个节点替换原节点后一定还能保持二分搜索树的性质
+   */
+  deleteNode(key) {
+    const root = this.deleteNodeOperate(this.root, key);
+    return root;
+  }
+
+  deleteNodeOperate(node: TreeNode<T>, key) {
+    if (node.key > key) {
+      node.left = this.deleteNodeOperate(node.left, key);
+      return node;
+    } else if (node.key < key) {
+      node.right = this.deleteNodeOperate(node.right, key);
+      return node;
+    } else {
+      if (node.left == null) {
+        const rightNode = node.right;
+        node = rightNode;
+        this.nodeCount--;
+        return node;
+      }
+      if (node.right == null) {
+        const leftNode = node.left;
+        node = leftNode;
+        this.nodeCount--;
+        return node;
+      }
+
+      const successorNode = this.getMinimumOperate(node.right);
+      successorNode.right = this.deleteMinmumOperate(node.right);
+      successorNode.left = node.left;
+      node = successorNode;
+      this.nodeCount--;
+      return node;
+    }
+  }
+
   isEmpty(): boolean {
     return this.nodeCount === 0;
   }

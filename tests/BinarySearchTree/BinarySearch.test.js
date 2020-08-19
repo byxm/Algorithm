@@ -113,7 +113,7 @@ describe("二分搜索树", () => {
     }
     bst.deleteMinmum();
     // bst.deleteMinmum();
-    console.log("logggggg", JSON.stringify(bst.root));
+    // console.log("logggggg", JSON.stringify(bst.root));
     // assert.equal(deepEqual)
   });
   it("删除二分搜素树中的最大节点", () => {
@@ -124,7 +124,15 @@ describe("二分搜索树", () => {
     }
     bst.deleteMaxmum();
     // bst.deleteMinmum();
-    console.log("logggggg", bst.root);
     // assert.equal(deepEqual)
   });
+  it('删除二分搜索树中的任意节点',() => {
+    const bst = new BST.default();
+    const arr = [28,24,32,22,26,36,31,30,33,38]
+    for (const bstEle of arr) {
+      bst.insert(bstEle, bstEle);
+    } 
+    const node = bst.deleteNode(24);
+    // console.log('nodeDelete',node);
+  })
 });
