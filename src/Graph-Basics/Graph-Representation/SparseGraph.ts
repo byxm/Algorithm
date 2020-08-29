@@ -8,7 +8,7 @@ class SparseGraph {
   private edageCount: number; // 边数量
   private isDirected: boolean; // 是有向图还是无向图
 
-  private graphData: boolean[][]; // 图的数据
+  graphData: boolean[][]; // 图的数据
 
   constructor(vertexCount: number, isDirected: boolean) {
     this.vertexCount = vertexCount;
@@ -30,8 +30,39 @@ class SparseGraph {
     return this.edageCount;
   }
 
+  /**
+   * @description 向图中添加一个边
+   */
+  addEdage(v, w) {
+    try {
+      this.isAcrossSide(v, w);
+      this.graphData[v].push(w);
+      // 无向图需要再次添加反向边，另外此处需要处理自环边的情况
+      if (v !== w && !this.isDirected) {
+        this.graphData[w].push(v);
+      }
+      this.edageCount++;
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
-
+  /**
+   * @description 判断是否存在从v到w这样的一条边
+   */
+  hasEdage(v, w) {
+    try {
+      this.isAcrossSide(v, w);
+      for (let i = 0; i < this.graphData[v].length; i++) {
+        if (this.graphData[v][i] === w) {
+          return true;
+        }
+        return false;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   isAcrossSide(v, w) {
     if (!(v >= 0 && v < this.vertexCount)) {
@@ -41,5 +72,50 @@ class SparseGraph {
       throw new Error(`${w} 顶点越界`);
     }
   }
-
 }
+
+// 图的邻边遍历
+export class adjIterator {
+  private SparseGraph: SparseGraph;
+  private vertex: number; // 要遍历的顶点
+  private index: number; // 表示迭代到哪里了
+
+  constructor(SparseGraph: SparseGraph, vertext: number) {
+    this.SparseGraph = SparseGraph;
+    this.vertex = vertext;
+    this.index = 0;
+  }
+
+  /**
+   * @description 表示迭代要开始的元素
+   */
+  begin() {
+    this.index = 0; // 设置开始索引为0
+    if (this.SparseGraph.graphData[this.vertex].length) {
+      return this.SparseGraph.graphData[this.vertex][this.index];
+    }
+    return -1;
+  }
+
+  /**
+   * @description 下一个要迭代的元素
+   */
+  next() {
+    this.index++;
+    if (this.index < this.SparseGraph.graphData[this.vertex].length) {
+      return this.SparseGraph.graphData[this.vertex][this.index];
+    }
+    return -1;
+  }
+
+  /**
+   * @description 是否迭代到最后了
+   */
+
+  end() {
+      // @ts-ignore
+    return this.index >= (this.SparseGraph.graphData[this.vertex][this.index]);
+  }
+}
+
+export default SparseGraph;
