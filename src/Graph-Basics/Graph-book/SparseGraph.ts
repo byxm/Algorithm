@@ -57,11 +57,24 @@ class SparseGraph {
    * @param { v, callback } v 要遍历的节点，callback 对接点操作的回调函数
   */
   bfs(v, callback) {
+    const colors = this.initializeColor();
     const queue = new Queue();
     queue.enqueue(v)
     while (!queue.isEmpty()) {
         const u = queue.dequeue();
-        
+        const adjVertex = this.adjList.get(u)
+        colors.set(u, 'grey') // 将当前队列首部的定点访问状态设置为被发现
+        // console.log('vetexttt', u, adjVertex)
+        for(const neighbors of adjVertex) { // 遍历邻边顶点获取查看邻边顶点状态
+          if(colors.get(neighbors) === 'white') { // 将邻边顶点的状态设置为已发现
+            colors.set(neighbors, 'grey')
+            queue.enqueue(neighbors)
+          }
+        }
+        colors.set(u, 'black') // 将顶点的状态设置为已搜索过
+        if(callback) {
+          callback(u)
+        }
     }
   }
 
@@ -87,4 +100,11 @@ sparseGraph.addEdage('D', 'H')
 sparseGraph.addEdage('D', 'G')
 
 sparseGraph.toString()
+
+
+const printVertex = (vertexValue) => {
+  console.log(`vertex: ${vertexValue}`)
+}
+
+sparseGraph.bfs(myVertices[0], printVertex)
 
