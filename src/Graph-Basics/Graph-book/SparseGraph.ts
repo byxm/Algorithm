@@ -1,4 +1,5 @@
 import Queue from "./Queue";
+import Stack from "./Stack";
 
 /**
  * Javascript数据结构与算法书中例子实现，邻接表实现稀疏图
@@ -108,13 +109,37 @@ sparseGraph.addEdage("C", "G");
 sparseGraph.addEdage("D", "H");
 sparseGraph.addEdage("D", "G");
 
-sparseGraph.toString();
+// sparseGraph.toString();
 
 const printVertex = (vertexValue) => {
   console.log(`vertex: ${vertexValue}`);
 };
 
-sparseGraph.bfs(myVertices[0], printVertex);
+const graphInfo = sparseGraph.bfs(myVertices[0], printVertex);
+// console.log("graphInfo", graphInfo.distance, graphInfo.precessors);
+
+/**
+ * @description 追溯指定顶点到各个顶点的路径
+ * 首先将顶点入栈，然后使用指定顶点找到对应的前溯节点，
+ */
+const fromVertex = myVertices[0];
+
+for (let i = 1; i < myVertices.length; i++) {
+  const toVertex = myVertices[i]; // 查到下一个顶点信息
+  const pathStack = new Stack();
+  for (let v = toVertex; v !== fromVertex; v = graphInfo.precessors.get(v)) {
+    // 从当前节点依次往前溯点找，直到找到顶点为止
+    pathStack.push(v);
+  }
+  pathStack.push(fromVertex)
+  let pathStr = pathStack.pop();
+
+  while (!pathStack.isEmpty()) {
+    pathStr = pathStr + " -> " + pathStack.pop(); // 出栈的元素是路径最后的点
+  }
 
 
-export default SparseGraph
+  console.log("pathStr", pathStr);
+}
+
+export default SparseGraph;
