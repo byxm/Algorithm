@@ -89,6 +89,32 @@ class SparseGraph {
       precessors,
     };
   }
+
+  /**
+   * @description 深度优先遍历，从指定的图的定点开始向下遍历节点直到遍历的顶点没有邻边
+   */
+  dfs(callback) {
+    const colors = this.initializeColor();
+    for (const vertex of this.vertices) {
+      if (colors.get(vertex) === "white") {
+        // 开始从顶点遍历
+        this.dfsFirst(vertex, colors, callback);
+      }
+    }
+  }
+
+  dfsFirst(vertex, colors, callback) {
+    colors.set(vertex, "grey"); //标记顶点为已访问
+    if (callback) {
+      callback(vertex);
+    }
+    for (const adjVertex of this.adjList.get(vertex)) {
+      if (colors.get(adjVertex) === "white") {
+        this.dfsFirst(adjVertex, colors, callback);
+      }
+    }
+    colors.set(vertex, "black"); // 访问完毕标记顶点为以搜索
+  }
 }
 
 const sparseGraph = new SparseGraph();
@@ -106,8 +132,8 @@ sparseGraph.addEdage("B", "F");
 sparseGraph.addEdage("E", "I");
 sparseGraph.addEdage("C", "D");
 sparseGraph.addEdage("C", "G");
-sparseGraph.addEdage("D", "H");
 sparseGraph.addEdage("D", "G");
+sparseGraph.addEdage("D", "H");
 
 // sparseGraph.toString();
 
@@ -138,8 +164,9 @@ for (let i = 1; i < myVertices.length; i++) {
     pathStr = pathStr + " -> " + pathStack.pop(); // 出栈的元素是路径最后的点
   }
 
-
   console.log("pathStr", pathStr);
 }
+
+sparseGraph.dfs(printVertex); // 深度有点遍历调用
 
 export default SparseGraph;

@@ -84,6 +84,32 @@ var SparseGraph = (function () {
             precessors: precessors
         };
     };
+    /**
+     * @description 深度优先遍历，从指定的图的定点开始向下遍历节点直到遍历的顶点没有邻边
+     */
+    SparseGraph.prototype.dfs = function (callback) {
+        var colors = this.initializeColor();
+        for (var _i = 0, _a = this.vertices; _i < _a.length; _i++) {
+            var vertex = _a[_i];
+            if (colors.get(vertex) === "white") {
+                // 开始从顶点遍历
+                this.dfsFirst(vertex, colors, callback);
+            }
+        }
+    };
+    SparseGraph.prototype.dfsFirst = function (vertex, colors, callback) {
+        colors.set(vertex, "grey"); //标记顶点为已访问
+        if (callback) {
+            callback(vertex);
+        }
+        for (var _i = 0, _a = this.adjList.get(vertex); _i < _a.length; _i++) {
+            var adjVertex = _a[_i];
+            if (colors.get(adjVertex) === "white") {
+                this.dfsFirst(adjVertex, colors, callback);
+            }
+        }
+        colors.set(vertex, "black"); // 访问完毕标记顶点为以搜索
+    };
     return SparseGraph;
 })();
 var sparseGraph = new SparseGraph();
@@ -100,8 +126,8 @@ sparseGraph.addEdage("B", "F");
 sparseGraph.addEdage("E", "I");
 sparseGraph.addEdage("C", "D");
 sparseGraph.addEdage("C", "G");
-sparseGraph.addEdage("D", "H");
 sparseGraph.addEdage("D", "G");
+sparseGraph.addEdage("D", "H");
 // sparseGraph.toString();
 var printVertex = function (vertexValue) {
     console.log("vertex: " + vertexValue);
@@ -127,4 +153,5 @@ for (var i = 1; i < myVertices.length; i++) {
     }
     console.log("pathStr", pathStr);
 }
+sparseGraph.dfs(printVertex); // 深度有点遍历调用
 exports["default"] = SparseGraph;
