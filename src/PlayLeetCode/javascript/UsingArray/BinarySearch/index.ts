@@ -37,14 +37,17 @@ const arr = SortTestHelper.generateNealyOrderArray(10000000);
 
 const BinarySearchByLoop = (targetArr, targetElement) => {
   let l = 0;
-  let r = targetArr.length - 1;
-  while (l <= r) {
-    const mid = Math.floor((l + r) / 2);
+  let r = targetArr.length - 1; // 解法一：定义的是[l.......r]这样一个左闭右闭的区间
+  // let r = targetArr.length; // 解法二：定义的是[l.......r)这样一个左闭右开的区间,当定义左闭右开的时候说明最右边元素索引大了一位
+  while (l <= r) { 
+    // while(l < r) {  // 解法二 
+    const mid = Math.floor((l + r) / 2);  
     if (targetArr[mid] === targetElement) {
       return mid;
     }
     if (targetArr[mid] > targetElement) {
       r = mid - 1;
+      // r = mid; // 解法二：由于右边开区间本来就取不到，所以就不用减1了
     }
     if (targetArr[mid] < targetElement) {
       l = mid + 1;
