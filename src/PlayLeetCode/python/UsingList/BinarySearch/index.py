@@ -1,5 +1,9 @@
 import math
-from ....python.utilHelper import UtilHelper
+# from ....python.utilHelper import UtilHelper
+# import python.Us
+# from utilHelper import UtilHelper
+from ..UsingList import utilHelper
+
 
 def BinarySearchLoop(targetArr, targetElement):
     l = 0
@@ -35,7 +39,7 @@ def BinarySearchByRecursion(targetArr, targetElement, left, right):
 
 
 
-arr = UtilHelper.generalNearlyOrderList(1000000)
+arr = utilHelper.UtilHelper.generalNearlyOrderList(1000000)
 
 index = BinarySearchLoop(arr, 10)
 
