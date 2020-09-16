@@ -1,5 +1,5 @@
 /**
- * @description LeetCode 第282号问题，基本解法
+ * @description LeetCode 第283号问题，基本解法
  * 思路：先将非0元素拿出来，然后将非0元素缺少的部分补充为0
  * https://leetcode.com/problems/move-zeroes/
  */
