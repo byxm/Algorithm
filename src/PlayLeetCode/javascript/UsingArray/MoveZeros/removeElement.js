@@ -8,8 +8,6 @@
 //     }
 //     return nums.length
 // };
-
-
 // 优化解法
 /**
  * @description 根据题目的需求可以做个优化，上面那个解法时间复杂度要高些，另外还使用了js底层的api
@@ -17,15 +15,17 @@
  * 所以优化思路如下：
  * 迭代数组元素，并初始化一个索引用于记录不为指定元素的索引
 */
-
-
-function removeElement(nums: number[], val: number): number {
-    let i = 0;
-    for(let j = 0; j < nums.length; j++) {
-        if(nums[j] === val) {
-            [nums[j], nums[i]] = [nums[i], nums[j]];
-            i++
+function removeElement(nums, val) {
+    var i = 0;
+    for (var j = 0; j < nums.length; j++) {
+        if (nums[j] === val) {
+            _a = [nums[i], nums[j]], nums[j] = _a[0], nums[i] = _a[1];
+            i++;
         }
     }
-    return i
-};
+    return i;
+    var _a;
+}
+;
+var len = removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2);
+console.log('len', len);
