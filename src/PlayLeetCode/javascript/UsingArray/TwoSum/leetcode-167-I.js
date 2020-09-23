@@ -1,8 +1,6 @@
-"use strict";
 /**
  * @description leetcode第167题
  */
-exports.__esModule = true;
 // 暴力解法，时间复杂度O(n*2)
 // function twoSum(numbers: number[], target: number): number[] {
 //     for(let i = 0; i < numbers.length; i++) {
@@ -23,8 +21,7 @@ function twoSum(numbers, target) {
     for (var i = 0; i < numbers.length; i++) {
         var addFirst = numbers[i];
         var addSecond = target - addFirst;
-        var res = BinarySearch(numbers, i + 1, numbers.length, addSecond);
-        console.log('res', res);
+        var res = BinarySearch(numbers, i + 1, numbers.length - 1, addSecond);
         if (res > -1) {
             i += 1;
             return [i, res];
@@ -32,13 +29,12 @@ function twoSum(numbers, target) {
     }
 }
 function BinarySearch(arr, startIndex, endIndex, target) {
-    //   console.log('searchArr', startIndex, endIndex, target);
     var mid = Math.floor((startIndex + endIndex) / 2);
     if (arr[mid] === target) {
         mid += 1;
         return mid;
     }
-    if (startIndex === endIndex) {
+    if (startIndex >= endIndex) { // 当元素处于右边界的时候，查询到最后左边的索引值会大于右边的索引值
         return -1;
     }
     if (arr[mid] > target) {
@@ -48,5 +44,3 @@ function BinarySearch(arr, startIndex, endIndex, target) {
         return BinarySearch(arr, mid + 1, endIndex, target);
     }
 }
-var result = twoSum([3, 24, 50, 79, 88, 150, 345], 200);
-console.log("result", result);
