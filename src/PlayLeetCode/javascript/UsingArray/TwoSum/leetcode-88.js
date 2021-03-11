@@ -1,31 +1,32 @@
-function mergeTwoArray(num1, num2) {
-    const retArray = []
-    let l = 0;
-    let r = 0;
-    for(let i = 0; i < num1.length; i++) {
-        if(num1[l] > num2[r]) {
-            retArray.push(num2[r])
-            r++
-        }
-        if(num1[l] < num2[r]) {
-            retArray.push(num1[l])
-            l++
-        }
-        if(num1[l] === num2[r]) {
-            retArray.push(num1[l])
-            retArray.push(num2[r])
-            l++
-            r++
-        }
+function mergeTwoArray(nums1, m, nums2, n) {
+  let l = m - 1,
+    r = n - 1,
+    p = m + n - 1; 
+
+  while (l >= 0 && r >= 0) {
+    console.log("l, r", l, r);
+    if (nums2[r] > nums1[l]) {
+      nums1[p] = nums2[r];
+      r--;
+      p--;
     }
-    return retArray
+    if (nums2[r] < nums1[l]) {
+      nums1[p] = nums1[l];
+    //   p--;
+    //   nums1[p] = nums1[l];
+      l--
+      p--
+    }
+    if (nums2[r] === nums1[l]) {
+      nums1[p] = nums1[l];
+      p--;
+      nums1[p] = nums2[r];
+      p--;
+      l--;
+      r--;
+    }
+  }
+  return nums1;
 }
 
-
-console.log('mergeTwoArray', mergeTwoArray([1,3,8,45,56], [2,4,8,10,88]));
-
-
-
-
-
-
+console.log(mergeTwoArray([4,5,6,0,0,0], 3, [1,2,3], 3));
